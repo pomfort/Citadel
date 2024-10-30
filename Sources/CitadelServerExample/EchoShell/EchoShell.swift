@@ -14,7 +14,6 @@
 import Foundation
 import NIO
 import NIOSSH
-import ColorizeSwift
 import Citadel
 
 // Simple shell emulator that returns the user input and offers some basic commands like: help, history, clear, whoami, date and exit.
@@ -113,7 +112,7 @@ fileprivate struct _SimpleShell {
                     outbound.write(Terminal.newLine)
                 } catch {
                     outbound.write(Terminal.newLine)
-                    outbound.write("Error: \(error)".red())
+                    outbound.write("Error: \(error)")
                     outbound.write(Terminal.newLine)
                 }
                 
@@ -121,7 +120,7 @@ fileprivate struct _SimpleShell {
             } else {
                 if let inputString {
                     outbound.write(Terminal.newLine)
-                    outbound.write("Unknown command: \(inputString)".red())
+                    outbound.write("Unknown command: \(inputString)")
                 }
 
                 // write prompt
@@ -181,6 +180,6 @@ fileprivate struct _SimpleShell {
     }
     
     fileprivate var pseudoPrompt: [UInt8] {
-        return Array("\(context.session.username ?? "")@\(hostname)".green().utf8) + Array(":~$ ".foregroundColor(.darkViolet).utf8)
+        return Array("\(context.session.username ?? "")@\(hostname)".utf8) + Array(":~$ ".utf8)
     }
 }
