@@ -91,8 +91,10 @@ final class ShellServerInboundHandler: ChannelInboundHandler {
 
                 do {
                     try await group.next()
+                    self.inbound.continuation.finish()
                     try await shellContext.close()
                 } catch {
+                    self.inbound.continuation.finish()
                     try await shellContext.close()
                     throw error
                 }
