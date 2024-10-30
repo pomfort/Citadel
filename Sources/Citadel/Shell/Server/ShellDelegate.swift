@@ -32,13 +32,17 @@ public struct ShellOutboundWriter: Sendable {
     public func write(_ string: String) {
         write(ByteBuffer(string: string))
     }
-    
+
     public func write(_ data: [UInt8]) {
         write(ByteBuffer(bytes: data))
     }
-    
+
     public func write(_ data: ByteBuffer) {
         continuation.yield(.stdout(data))
+    }
+
+    public func finish() {
+        continuation.finish()
     }
 }
 
